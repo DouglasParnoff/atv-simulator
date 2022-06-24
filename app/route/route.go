@@ -1,13 +1,13 @@
 package route
 
-import {
+import (
 	"errors"
 	"os"
 	"bufio"
 	"strings"
 	"strconv"
 	"encoding/json"
-}
+)
 
 type Route struct {
 	ID string `json:"routeId"`
