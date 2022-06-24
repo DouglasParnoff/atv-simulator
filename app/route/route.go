@@ -6,25 +6,33 @@ import {
 	"bufio"
 	"strings"
 	"strconv"
+	"encoding/json"
 }
 
 type Route struct {
-	ID string
-	ClientID string
-	Positions []Position
+	ID string `json:"routeId"`
+	ClientID string `json:"clientId"`
+	Positions []Position `json:"position"`
 }
 
 type Position struct {
-	Lat float64
-	Long float64
+	Lat float64 `json:"lat"`
+	Long float64 `json:"long"`
 }
 
-func(route *Route) loadPositions() error {
-	if route.ID == "" {
+type PartialRoutePosition struct {
+	ID string `json:"routeId"`
+	ClientID string `json:"clientId"`
+	Position []float64 `json:"position"`
+	Finished bool `json:"finished"`
+}
+
+func(pRoute *Route) loadPositions() error {
+	if pRoute.ID == "" {
 		return errors.New("Route ID is empty")
 	}
 
-	file, error := os.Open("destinations/" + route.ID + ".txt")
+	file, error := os.Open("destinations/" + pRoute.ID + ".txt")
 
 	if error != nil {
 		return error
@@ -45,8 +53,30 @@ func(route *Route) loadPositions() error {
 			return nil
 		}
 
-		route.Positions = append(route.Positions, Position{Lat: lat, Long: long})
+		pRoute.Positions = append(pRoute.Positions, Position{Lat: lat, Long: long})
 
 		return nil
 	}
+}
+
+func(pRoute *Route) exportJsonPositions([]string, error) {
+	var partialRoute PartialRoutePosition
+	var result []string
+	totalPositions := len(pRoute.Positions)
+
+	for loopIndex, coordinates := range pRoute.Positions {
+		partialRoute.ID = pRoute.ID
+		partialRoute.ClientID = pRoute.ClientID
+		partialRoute.Position = []float64{coordinates.Lat, coordinates.Long}
+		partialRoute.Finished = false
+		if totalPositions -1 == loopIndex {
+			partialRoute.Finished = true
+		}
+		jsonRoute, error := json.Marshal(partialRoute)
+		if error != nil {
+			return nil, error
+		}
+		result = append(result, string(jsonRoute))
+	}
+
 }
