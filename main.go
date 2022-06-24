@@ -1,9 +1,9 @@
 package main
 
-import {
+import (
 	"fmt"
 	deliveryRoute "github.com/douglasparnoff/atv-simulator/app/route"
-}
+)
 
 func main() {
 	route := deliveryRoute.Route{ID: "123", ClientID: "456"}
