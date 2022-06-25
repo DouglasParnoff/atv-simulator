@@ -44,22 +44,22 @@ func(pRoute *Route) loadPositions() error {
 	for scanner.Scan() {
 		data := strings.Split(scanner.Text(), ",")
 		
-		lat, error := strconv.parseFloat(data[0], 64)
+		lat, error := strconv.ParseFloat(data[0], 64)
 		if error != nil {
 			return nil
 		}
-		long, error := strconv.parseFloat(data[1], 64)
+		long, error := strconv.ParseFloat(data[1], 64)
 		if error != nil {
 			return nil
 		}
 
 		pRoute.Positions = append(pRoute.Positions, Position{Lat: lat, Long: long})
 
-		return nil
 	}
+	return nil
 }
 
-func(pRoute *Route) exportJsonPositions([]string, error) {
+func(pRoute *Route) exportJsonPositions() ([]string, error) {
 	var partialRoute PartialRoutePosition
 	var result []string
 	totalPositions := len(pRoute.Positions)
@@ -78,5 +78,5 @@ func(pRoute *Route) exportJsonPositions([]string, error) {
 		}
 		result = append(result, string(jsonRoute))
 	}
-
+	return result, nil
 }
