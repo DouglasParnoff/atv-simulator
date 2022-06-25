@@ -11,8 +11,8 @@ func main() {
 		ClientID: "456",
 	}
 	
-	route.loadPositions()
+	route.LoadPositions()
 
-	jsonPositions, _ := route.exportJsonPositions()
+	jsonPositions, _ := route.ExportJsonPositions()
 	fmt.Println(jsonPositions[0])
 }

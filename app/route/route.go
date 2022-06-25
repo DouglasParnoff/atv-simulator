@@ -27,7 +27,7 @@ type PartialRoutePosition struct {
 	Finished bool `json:"finished"`
 }
 
-func(pRoute *Route) loadPositions() error {
+func(pRoute *Route) LoadPositions() error {
 	if pRoute.ID == "" {
 		return errors.New("Route ID is empty")
 	}
@@ -59,7 +59,7 @@ func(pRoute *Route) loadPositions() error {
 	return nil
 }
 
-func(pRoute *Route) exportJsonPositions() ([]string, error) {
+func(pRoute *Route) ExportJsonPositions() ([]string, error) {
 	var partialRoute PartialRoutePosition
 	var result []string
 	totalPositions := len(pRoute.Positions)
