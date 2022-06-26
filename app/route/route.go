@@ -33,7 +33,7 @@ func(pRoute *Route) LoadPositions() error {
 		return errors.New("Route ID is empty")
 	}
 
-	var filePath = "destinations/" pRoute.ID + ".txt"
+	var filePath = "destinations/" + pRoute.ID + ".txt"
 
 	file, error := os.Open(filePath)
 
