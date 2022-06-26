@@ -14,6 +14,5 @@ func main() {
 	route.LoadPositions()
 
 	jsonPositions, _ := route.ExportJsonPositions()
-	fmt.Println(len(jsonPositions))
 	fmt.Println(jsonPositions[1])
 }
