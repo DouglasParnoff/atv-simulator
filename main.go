@@ -7,12 +7,13 @@ import (
 
 func main() {
 	route := deliveryRoute.Route{
-		ID: "123", 
+		ID: "1", 
 		ClientID: "456",
 	}
 	
 	route.LoadPositions()
 
 	jsonPositions, _ := route.ExportJsonPositions()
-	fmt.Println(jsonPositions[0])
+	fmt.Println(len(jsonPositions))
+	fmt.Println(jsonPositions[1])
 }

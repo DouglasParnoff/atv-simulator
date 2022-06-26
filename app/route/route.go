@@ -1,6 +1,7 @@
 package route
 
 import (
+	"fmt"
 	"errors"
 	"os"
 	"bufio"
@@ -32,15 +33,18 @@ func(pRoute *Route) LoadPositions() error {
 		return errors.New("Route ID is empty")
 	}
 
-	file, error := os.Open("destinations/" + pRoute.ID + ".txt")
+	var filePath = "destinations/" pRoute.ID + ".txt"
+
+	file, error := os.Open(filePath)
 
 	if error != nil {
+		fmt.Println("File '" + filePath + "' not found.")
 		return error
 	}
 
 	defer file.Close()
-
 	scanner := bufio.NewScanner(file)
+
 	for scanner.Scan() {
 		data := strings.Split(scanner.Text(), ",")
 		
